@@ -1,0 +1,16 @@
+﻿@{
+}
+@foreach (Book b in Model)
+{
+    <h3>@b.Title</h3>
+
+    <ul>
+        <li>Author: @b.Author</li>
+        <li>Publisher: @b.Publisher</li>
+        <li>Isbn: @b.Isbn</li>
+        <li>Classification: @b.Classification</li>
+        <li>PageCount: @b.PageCount pages</li>
+        <li>Price: $@b.Price</li>
+    </ul>
+    <br />
+}
