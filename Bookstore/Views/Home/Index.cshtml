@@ -4,34 +4,9 @@
 
 @foreach (Book b in Model.Books) //after chnaging the model you need to add .Books
 {
-    @*<partial name="BookSummary"/>*@
-    @*    <h3>@b.Title</h3>
+    //this pulls form the booksummary.cshtml page!
+    <partial name="BookSummary" model="b"/>
 
-        <ul>
-            <li>Author: @b.Author</li>
-            <li>Publisher: @b.Publisher</li>
-            <li>Isbn: @b.Isbn</li>
-            <li>Classification: @b.Classification</li>
-            <li>PageCount: @b.PageCount pages</li>
-            <li>Price: $@b.Price</li>
-        </ul>*@
-
-    <div class="card card-outline-primary m-1 p-1">
-        <div class="bg-faded p-1">
-            <h4>
-                @b.Title
-                <span class="badge badge-pill badge-primary" style="float:right">
-                    <small>@b.Price.ToString("c")</small>
-                </span>
-            </h4>
-        </div>
-        <div class="card-text p-1">@b.Author</div>
-        <div class="card-text p-1">@b.Publisher</div>
-        <div class="card-text p-1">@b.Isbn</div>
-        <div class="card-text p-1">@b.Classification</div>
-        <div class="card-text p-1">@b.PageCount pages</div>
-    </div>
-    <br />
 }
 
 @*passes to the tag helper that builds the pagination*@

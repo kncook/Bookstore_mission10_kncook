@@ -36,6 +36,12 @@ namespace Bookstore
             });
             //each HTTP request gets its own object
             services.AddScoped<IBookstoreRepository, EFBookstoreRepository>();
+
+            services.AddRazorPages();
+
+            //allows you to run a session so that things remain in the cart until the end of the session
+            services.AddDistributedMemoryCache();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,19 +54,33 @@ namespace Bookstore
 
             //uses the wwroot
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
-                //endpoints are executed in ORDER
-/*                endpoints.MapControllerRoute(
+                endpoints.MapControllerRoute("typepage",
+                   "{bookType} / Page{pageNum}",
+                   new { Controller = "Home", action = "Index" }
+                    );
+
+                //endpoints are executed in ORDER -- if we get a page # w/o a type
+                endpoints.MapControllerRoute(
                     name: "Paging",
                     pattern: "Page{pageNum}",
-                    defaults: new { Controller = "Home", action = "Index" });*/
+                    defaults: new { Controller = "Home", action = "Index", pageNum= 1
+                    }); 
+
+                //this is if we were just to get a category
+                endpoints.MapControllerRoute("type",
+                    "{bookType}",
+                    new { Controller = "Home", action = "Index", pageNum = 1 });
+
 
                 //added/changed this to go to defult controller app
                 endpoints.MapDefaultControllerRoute();
+
+                endpoints.MapRazorPages();
             });
 
  

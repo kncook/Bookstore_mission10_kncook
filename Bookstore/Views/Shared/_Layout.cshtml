@@ -22,17 +22,19 @@
     <link href="~/lib/css/bootstrap.css" rel="stylesheet" />
 </head>
 <body>
+    @*this div brings black bar on the top w/ the nav bar*@
     <div class="bg-dark text-white p-2">
         <span class="navbar-brand ml-2">HBS</span>
     </div>
+    @*this makes 3 columns in the row*@
     <div class="row m-1 p-1">
         <div id="categories" class="col-3">
-            Hilton's Book Store
+            <vc:types></vc:types>
         </div>
         <div class="col-9">
             @RenderBody()
         </div>
     </div>
-    <center><footer>© 2023 BookStore, Inc. All Rights Reserved</footer></center>
+    <center><footer>© 2023 HBS, Inc. All Rights Reserved</footer></center>
 </body>
 </html>

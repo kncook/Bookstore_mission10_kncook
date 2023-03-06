@@ -51,7 +51,9 @@ namespace Bookstore.Infrastructure
                 //added if statement for styling
                 if (PageClassesEnabled)
                 {
+                    //if true we will add the page class, and css class
                     tb.AddCssClass(PageClass);
+                    //if statement = i ==, ? = then, : = do this
                     tb.AddCssClass(i == PageBook.CurrentPage
                         ? PageClassSelected : PageClassNormal);
                 }
