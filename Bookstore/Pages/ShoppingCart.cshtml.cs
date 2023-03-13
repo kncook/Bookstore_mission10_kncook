@@ -13,19 +13,20 @@ namespace Bookstore.Pages
     {
         //same as before
         private IBookstoreRepository repo { get; set; }
-        public ShoppingCartModel (IBookstoreRepository temp)
-        {
-            repo = temp;
-        }
 
         public Basket basket { get; set; }
         public string ReturnUrl { get; set; }
+
+        public ShoppingCartModel (IBookstoreRepository temp, Basket b)
+        {
+            repo = temp;
+            basket = b;
+        }
 
 
         public void OnGet(string returnUrl)
         {
             ReturnUrl = returnUrl ?? "/";
-            basket = HttpContext.Session.GetJson<Basket>("basket") ?? new Basket();
         }
 
         //adds the item user selects and redirects to the onget above
@@ -35,14 +36,21 @@ namespace Bookstore.Pages
             Book b = repo.Books.FirstOrDefault(x => x.BookId == bookId);
 
             //if there is already a session set up it uses that session, if not it will create a new basket
-            basket = HttpContext.Session.GetJson<Basket>("basket") ?? new Basket();
+            //basket = HttpContext.Session.GetJson<Basket>("basket") ?? new Basket();
             //adds item to the basket
             basket.AddItem(b, 1);
 
             //sets json file based on the basket so it is retained page to page
-            HttpContext.Session.SetJson("basket", basket);
+            //HttpContext.Session.SetJson("basket", basket);
 
             return RedirectToPage(new { ReturnUrl = returnUrl });
+        }
+
+        //associated with shoppingcart.cshtml page with the form that removes it
+        public IActionResult OnPostRemove(int bookId, string returnUrl)
+        {
+            basket.RemoveItem(basket.Items.First(x => x.Book.BookId == bookId).Book);
+            return RedirectToPage(new {ReturnUrl = returnUrl});
         }
     }
 }

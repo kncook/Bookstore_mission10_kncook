@@ -36,12 +36,18 @@ namespace Bookstore
             });
             //each HTTP request gets its own object
             services.AddScoped<IBookstoreRepository, EFBookstoreRepository>();
+            services.AddScoped<IShoppingCartRepository, EFShoppingCartRepository>();
 
             services.AddRazorPages();
 
             //allows you to run a session so that things remain in the cart until the end of the session
             services.AddDistributedMemoryCache();
             services.AddSession();
+
+            //gets a new basket if there is not already one (sessionbasket.cs)
+            services.AddScoped<Basket>(x => SessionBasket.GetBasket(x));
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
